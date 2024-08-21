@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package pizza_order;
+
+option go_package = "tlb_katia.pizza-order.v1;pizza_orderv1";
+
+enum PizzaSize {
+  SMALL = 0;
+  MEDIUM = 1;
+  LARGE = 2;
+}
+
+enum OrderStatus {
+  PREPARING = 0;
+  ON_THE_WAY = 1;
+  DELIVERED = 2;
+  CANCELLED = 3;
+}
+
+service POrder {
+  rpc PlaceOrder (OrderRequest) returns (OrderResponse);
+  rpc CheckOrderStatus (OrderStatusRequest) returns (OrderStatusResponse);
+  rpc CancelOrder (CancelOrderRequest) returns (CancelOrderResponse);
+}
+
+message OrderRequest {
+  string customer_name = 1;
+  string pizza_type = 2;
+  PizzaSize size = 3;
+  repeated string toppings = 4; // Extra toppings
+}
+
+message OrderResponse {
+  string order_id = 1;
+  string message = 2;
+}
+
+message OrderStatusRequest {
+  string order_id = 1;
+}
+
+message OrderStatusResponse {
+  string order_id = 1;
+  OrderStatus status = 2;
+}
+
+message CancelOrderRequest {
+  string order_id = 1;
+}
+
+message CancelOrderResponse {
+  string order_id = 1;
+  string message = 2; // e.g., "cancelled", "too late to cancel"
+}
