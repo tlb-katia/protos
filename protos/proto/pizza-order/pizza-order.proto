@@ -50,5 +50,5 @@ message CancelOrderRequest {
 
 message CancelOrderResponse {
   string order_id = 1;
-  string message = 2; // e.g., "cancelled", "too late to cancel"
+  string message = 2;
 }
